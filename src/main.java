@@ -1,6 +1,9 @@
+import jeu.Board;
+
 public class main {
 
     public static void main(String [] args){
-        System.out.println("hello !!!");
+        Board b = new Board();
+        b.afficherJeu();
     }
 }

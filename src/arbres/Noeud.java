@@ -1,6 +1,6 @@
 package arbres;
 
-import globals.Etat;
+import jeu.Etat;
 
 import java.util.List;
 
