@@ -1,5 +1,7 @@
 package jeu;
 
+import java.util.Scanner;
+
 public class Board {
 
     static final int LARGEUR_MAX = 7 ;// nb max de fils pour un noeud (= nb max de coups possibles)
@@ -10,6 +12,7 @@ public class Board {
     static final int HUMAIN_GAGNE = -1;
     static final int MATCHNUL = 0;
     static final int NON = 2;
+    int joueurCourant ;
 
     //
     private String plateau[][];
@@ -57,6 +60,10 @@ public class Board {
         }
     }
 
+    /**
+     * Test de fin de jeu
+     * @return
+     */
     public int testFinDeJeu(){
 
         // tester si un joueur a gagné
@@ -100,5 +107,61 @@ public class Board {
             return MATCHNUL;
 
         return NON;
+    }
+
+    /**
+     * Demander un colonne au joueur humaine
+     * @return
+     */
+    public String demanderCoup (){
+        System.out.println("quelle colonne ? ") ;
+        Scanner scanIn = new Scanner(System.in);
+        String s;
+        s = scanIn.nextLine();
+        return s;
+    }
+
+    /**
+     * verfier le coup du joueur donnee
+     * @return
+     */
+    public boolean jouerCoup(Etat etat, String s){
+        int i = 0;
+
+        while (i < NB_LIGNE && plateau[i][Integer.valueOf(s)].equals(" ") ){
+            i++;
+        }
+        if ( !plateau[i-1][Integer.valueOf(s)].equals(" ") )
+            return false;
+        else {
+            plateau[i-1][Integer.valueOf(s)] = String.valueOf(etat.getJoueurNo()==0 ? " O "  : " X " );
+            // à l'autre joueur de jouer
+            etat.setJoueurNo(autreJoueur(etat.getJoueurNo()));
+            etat.setPlateau(this.getPlateau());
+            return true;
+        }
+    }
+
+    public int autreJoueur(int i){
+        if(i == 0 )
+            return 1;
+        else
+            return 0;
+    }
+
+    public int getJoueurCourant() {
+        return joueurCourant;
+    }
+
+    public void setJoueurCourant(int joueurCourant) {
+        this.joueurCourant = joueurCourant;
+    }
+
+    public String[][] getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(String[][] plateau) {
+        this.plateau = plateau;
     }
 }
